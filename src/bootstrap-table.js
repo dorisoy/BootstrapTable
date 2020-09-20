@@ -565,7 +565,7 @@ class BootstrapTable {
     }
 
     if (typeof opts.buttonsOrder === 'string') {
-      opts.buttonsOrder = opts.buttonsOrder.replace(/\[|\]| |'/g, '').toLowerCase().split(',')
+      opts.buttonsOrder = opts.buttonsOrder.replace(/\[|\]| |'/g, '').split(',')
     }
 
     this.buttons = Object.assign(this.buttons, {
@@ -721,17 +721,17 @@ class BootstrapTable {
       ) {
         opts[optionName] = true
       }
-
-      if (!opts.buttonsOrder.includes(buttonName)) {
+      if (opts.buttonsOrder.findIndex(item => buttonName.toLowerCase() === item.toLowerCase()) === -1) {
         opts.buttonsOrder.push(buttonName)
       }
     }
 
     // Adding the button html to the final toolbar html when the showOption is true
     for (const button of opts.buttonsOrder) {
-      const showOption = opts[`show${button.charAt(0).toUpperCase()}${button.substring(1)}`]
-
-      if (showOption) {
+      if (
+        opts[`show${button.charAt(0).toUpperCase()}${button.substring(1)}`] ||
+        opts[`show${button}`]
+      ) {
         html.push(buttonsHtml[button])
       }
     }
