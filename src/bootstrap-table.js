@@ -50,6 +50,10 @@ class BootstrapTable {
     if (typeof this.buttons !== 'object') {
       this.buttons = {}
     }
+
+    if (typeof opts.icons === 'string') {
+      opts.icons = Utils.calculateObjectValue(null, opts.icons)
+    }
   }
 
   initLocale () {
@@ -562,10 +566,6 @@ class BootstrapTable {
       this.constants.classes.buttonsGroup,
       `${this.constants.classes.pull}-${opts.buttonsAlign}`
     ].join(' ')}">`]
-
-    if (typeof opts.icons === 'string') {
-      opts.icons = Utils.calculateObjectValue(null, opts.icons)
-    }
 
     if (typeof opts.buttonsOrder === 'string') {
       opts.buttonsOrder = opts.buttonsOrder.replace(/\[|\]| |'/g, '').split(',')
@@ -1607,9 +1607,9 @@ class BootstrapTable {
 
         if (this.options.cardView) {
           const cardTitle = this.options.showHeader ?
-            `<span class="card-view-title"${style_}>${Utils.getFieldTitle(this.columns, field)}</span>` : ''
+            `<span class="card-view-title ${cellStyle.classes}"${style_}>${Utils.getFieldTitle(this.columns, field)}</span>` : ''
 
-          text = `<div class="card-view">${cardTitle}<span class="card-view-value">${value}</span></div>`
+          text = `<div class="card-view">${cardTitle}<span class="card-view-value ${cellStyle.classes}"${style_}>${value}</span></div>`
 
           if (this.options.smartDisplay && value === '') {
             text = '<div class="card-view"></div>'
